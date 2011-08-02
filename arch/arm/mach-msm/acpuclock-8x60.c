@@ -52,16 +52,16 @@
  * The PLL hardware is capable of 384MHz to 1536MHz. The L_VALs
  * used for calibration should respect these limits. */
 #define L_VAL_SCPLL_CAL_MIN	0x08 /* =  432 MHz with 27MHz source */
-#define L_VAL_SCPLL_CAL_MAX	0x22 /* = 1512 MHz with 27MHz source */
+#define L_VAL_SCPLL_CAL_MAX	0x26 /* = 1512 MHz with 27MHz source */
 
-#define MAX_VDD_SC		1500000 /* uV */
+#define MAX_VDD_SC		1600000 /* uV */
 #define MAX_AXI			 310500 /* KHz */
 #define SCPLL_LOW_VDD_FMAX	 594000 /* KHz */
 #define SCPLL_LOW_VDD		1000000 /* uV */
 #define SCPLL_NOMINAL_VDD	1100000 /* uV */
-#define SCPLL_EXTENDED_VDD_FMIN  1512000 /* KHz */
-#define SCPLL_EXTENDED_VDD  1250000 /* uV */
-#define MAX_BOOT_KHZ 1188000
+#define SCPLL_EXTENDED_VDD_FMIN	1512000 /* KHz */
+#define SCPLL_EXTENDED_VDD	1250000 /* uV */
+#define MAX_BOOT_KHZ		1188000 /* KHz */
 
 /* SCPLL Modes. */
 #define SCPLL_POWER_DOWN	0
@@ -198,15 +198,12 @@ static struct clkctl_l2_speed l2_freq_tbl_v2[] = {
 	[12] = {1026000,  1, 0x13, 1100000, 1100000, 2},
 	[13] = {1080000,  1, 0x14, 1100000, 1200000, 2},
 	[14] = {1134000,  1, 0x15, 1100000, 1200000, 2},
-	[15] = {1188000,  1, 0x1A, 1200000, 1200000, 3},
-	[16] = {1296000,  1, 0x1B, 1200000, 1200000, 3},
-	[17] = {1404000,  1, 0x1C, 1200000, 1250000, 3},
-	[18] = {1512000,  1, 0x1D, 1250000, 1250000, 3},
-        [19] = {1620000,  1, 0x1E, 1250000, 1300000, 3},
-        [20] = {1728000,  1, 0x1F, 1250000, 1350000, 3},
-        [21] = {1836000,  1, 0x20, 1350000, 1400000, 3},
-        [22] = {1944000,  1, 0x21, 1400000, 1450000, 3},
-        [23] = {2050000,  1, 0x22, 1450000, 1500000, 3},
+	[15] = {1188000,  1, 0x16, 1200000, 1200000, 3},
+	[16] = {1404000,  1, 0x1A, 1200000, 1250000, 3},
+	[17] = {1620000,  1, 0x1E, 1250000, 1350000, 3},
+	[18] = {1728000,  1, 0x20, 1350000, 1450000, 3},
+	[19] = {1836000,  1, 0x22, 1450000, 1550000, 3},
+	[20] = {1944000,  1, 0x24, 1500000, 1600000, 3},
 };
 
 #define L2(x) (&l2_freq_tbl_v2[(x)])
@@ -230,15 +227,15 @@ static struct clkctl_acpu_speed acpu_freq_tbl_v2[] = {
   { {1, 1}, 1026000,  ACPU_SCPLL, 0, 0, 1, 0x13, L2(12), 1125000, 0x03006000},
   { {1, 1}, 1080000,  ACPU_SCPLL, 0, 0, 1, 0x14, L2(13), 1137500, 0x03006000},
   { {1, 1}, 1134000,  ACPU_SCPLL, 0, 0, 1, 0x15, L2(14), 1162500, 0x03006000},
-  { {1, 1}, 1188000,  ACPU_SCPLL, 0, 0, 1, 0x1A, L2(15), 1187500, 0x03006000},
-  { {1, 1}, 1296000,  ACPU_SCPLL, 0, 0, 1, 0x1B, L2(16), 1250000, 0x03006000},
-  { {1, 1}, 1404000,  ACPU_SCPLL, 0, 0, 1, 0x1C, L2(17), 1250000, 0x03006000},
-  { {1, 1}, 1512000,  ACPU_SCPLL, 0, 0, 1, 0x1D, L2(18), 1250000, 0x03006000},
-  { {1, 1}, 1620000,  ACPU_SCPLL, 0, 0, 1, 0x1E, L2(19), 1250000, 0x03006000},
-  { {1, 1}, 1728000,  ACPU_SCPLL, 0, 0, 1, 0x1F, L2(20), 1350000, 0x03006000},
-  { {1, 1}, 1836000,  ACPU_SCPLL, 0, 0, 1, 0x20, L2(21), 1350000, 0x03006000},
-  { {1, 1}, 1944000,  ACPU_SCPLL, 0, 0, 1, 0x21, L2(22), 1450000, 0x03006000},
-  { {1, 1}, 2050000,  ACPU_SCPLL, 0, 0, 1, 0x22, L2(23), 1450000, 0x03006000},
+  { {1, 1}, 1188000,  ACPU_SCPLL, 0, 0, 1, 0x16, L2(15), 1187500, 0x03006000},
+  { {1, 1}, 1296000,  ACPU_SCPLL, 0, 0, 1, 0x18, L2(15), 1187500, 0x03006000},
+  { {1, 1}, 1404000,  ACPU_SCPLL, 0, 0, 1, 0x1A, L2(16), 1187500, 0x03006000},
+  { {1, 1}, 1512000,  ACPU_SCPLL, 0, 0, 1, 0x1C, L2(16), 1250000, 0x03006000},
+  { {1, 1}, 1620000,  ACPU_SCPLL, 0, 0, 1, 0x1E, L2(16), 1250000, 0x03006000},
+  { {1, 1}, 1728000,  ACPU_SCPLL, 0, 0, 1, 0x20, L2(17), 1350000, 0x03006000},
+  { {1, 1}, 1836000,  ACPU_SCPLL, 0, 0, 1, 0x22, L2(18), 1450000, 0x03006000},
+  { {1, 1}, 1944000,  ACPU_SCPLL, 0, 0, 1, 0x24, L2(19), 1550000, 0x03006000},
+  { {1, 1}, 2050000,  ACPU_SCPLL, 0, 0, 1, 0x26, L2(20), 1600000, 0x03006000},
   { {0, 0}, 0 },
 };
 /* acpu_freq_tbl row to use when reconfiguring SC/L2 PLLs. */
@@ -835,4 +832,3 @@ void __init msm_acpu_clock_init(struct msm_acpu_clock_platform_data *clkdata)
 
 	cpufreq_table_init();
 }
-
