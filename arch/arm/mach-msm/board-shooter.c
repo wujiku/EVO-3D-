@@ -130,6 +130,8 @@
 #include <mach/perflock.h>
 #endif
 
+#define MAX_VDD 1400000
+
 extern int panel_type;
 
 #define MSM_SHARED_RAM_PHYS 0x40000000
