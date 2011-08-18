@@ -78,6 +78,23 @@ static struct notifier_block panic_blk = {
 	.notifier_call	= panic_prep_restart,
 };
 
+#ifdef CONFIG_MSM_DLOAD_MODE
+static void set_qct_dload_mode(int on)
+{
+	void *dload_mode_addr;
+
+	dload_mode_addr = MSM_IMEM_BASE;
+
+	if (dload_mode_addr) {
+		writel(on ? 0xE47B337D : 0, dload_mode_addr);
+		writel(on ? 0xCE14091A : 0,
+		       dload_mode_addr + sizeof(unsigned int));
+	}
+}
+#else
+#define set_qct_dload_mode(x) do {} while (0)
+#endif
+
 void msm_set_restart_mode(int mode)
 {
 	restart_mode = mode;
@@ -179,7 +196,7 @@ static void msm_pm_flush_console(void)
 }
 
 /* It seems that modem would like to lock kernel before restarting the system. */
-inline void soc_restart(char mode, const char *cmd)
+/* inline */ void soc_restart(char mode, const char *cmd)
 {
 	lock_kernel();
 	arm_pm_restart(mode, cmd);
@@ -223,6 +240,10 @@ void arch_reset(char mode, const char *cmd)
 			code = 0x99;
 
 		set_restart_reason(RESTART_REASON_OEM_BASE | code);
+
+		/* FIXME: Security concern, sbl3 DLOAD is NOT allowed on ship build */
+		if(code == 0xdd) //reboot oem-dd, boot to dload mode
+			set_qct_dload_mode(1);
 	} else if (!strcmp(cmd, "force-hard") ||
 			(RESTART_MODE_LEGECY < mode && mode < RESTART_MODE_MAX)
 		) {
